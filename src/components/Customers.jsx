@@ -3,52 +3,23 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import  Snackbar  from '@mui/material/Snackbar';
-
+import { Button } from "@mui/material";
 import { fetchCustomers} from "./customerapi";
+import { fetchTrainings } from "./trainingapi";
+import AddCustomer from "./AddCustomer";
+import EditCustomer from './EditCustomer';
+import AddTraining from "./AddTraining"
 
 function Customerlist() {
     const [customers, setCustomers] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [trainingOpen, setTrainingOpen] = useState(false)
 
     useEffect(() => {
         fetchCustomers(setCustomers); 
       }, []);
 
-    //const [open, setOpen] = useState(false);
-
-    // const deleteCustomer= (url) => {
-    //     if (window.confirm("Are you sure?")) {
-    //         fetch(url, { method: 'DELETE' })
-    //         .then(response => {
-    //             if(!response.ok) {
-    //                 throw new Error("Error in deletion: " + response.statusText);
-    //             } else {
-    //                 setOpen(true);
-    //                 fetchCustomers();
-    //             }
-    //         })
-    //         .then(() => fetchCustomers())
-    //         .catch(err => console.error(err))
-    // }
-    // }
-
-    const [columnDefs] = useState([
-        { field: 'firstname', sortable: true, filter: true, width: 120},
-        { field: 'lastname', sortable: true, filter: true, width: 120},
-        { field: 'email', sortable: true, filter: true, width:200},
-        { field: 'phone', sortable: true, filter: true, width:100 },
-        { field: 'streetaddress', sortable: true, filter: true, width:180 },
-        { field: 'postcode', sortable: true, filter: true, width:120 },
-        { field: 'city', sortable: true, filter: true, width:120 },
-       // {
-            //cellRenderer: params => <EditCustomers  customerdata = {params.data}  fetchCustomers = {fetchCustomers}/>,
-            //width: 120
-        //},
-       // {
-            //cellRenderer: params => <Button onClick={() => deleteCustomer(params.data._links.customer.href)}>Delete</Button>, width:120
-        //}
-    ])
-
-    useEffect(() => {
+      useEffect(() => {
         getCustomers();
     }, [])
 
@@ -58,19 +29,71 @@ function Customerlist() {
     }
     
 
+     const deleteCustomer= (url) => {
+         if (window.confirm("Are you sure?")) {
+             fetch(url, { method: 'DELETE' })
+             .then(response => {
+                 if(!response.ok) {
+                     throw new Error("Error in deletion: " + response.statusText);
+                 } else {
+                     setOpen(true);
+                     fetchCustomers();
+                 }
+             })
+             .then(() => fetchCustomers())
+             .catch(err => console.error(err))
+     }
+    }
+
+    const [columnDefs] = useState([
+        { field: 'firstname', sortable: true, filter: true, width: 120},
+        { field: 'lastname', sortable: true, filter: true, width: 130},
+        { field: 'email', sortable: true, filter: true, width:180},
+        { field: 'phone', sortable: true, filter: true, width: 150 },
+        { field: 'streetaddress', sortable: true, filter: true, width:160 },
+        { field: 'postcode', sortable: true, filter: true, width:130 },
+        { field: 'city', sortable: true, filter: true, width:110 },
+        {
+            cellRenderer: params => <EditCustomer customerdata={params.data} fetchCustomers={fetchCustomers} />,
+            width: 120
+          },
+          {
+            cellRenderer: params => <Button size="small" onClick={() => deleteCustomer(params.data.links[0].href)}>Delete</Button>,
+            width: 120
+          },
+          {
+            cellRenderer: params => <AddTraining customerdata={params.data} fetchCustomers={fetchCustomers} setTrainingOpen={setTrainingOpen} />,
+            width: 190
+          },
+    ])
+
+
    
 
     return(
         <>
-        <div className = "ag-grid-community/styles/ag-theme-material" style = {{ width: '90%', height: 600 }}>
-            <AgGridReact 
-            rowData = {customers}
-            columnDefs = {columnDefs}
-            pagination = {true}
-            paginationAutoPageSize = {true}
+      <AddCustomer fetchCustomers={fetchCustomers} />
+      <div className='ag-theme-material' style={{ width: '90%', height: 600 }}>
+        <AgGridReact 
+          rowData={customers}
+          columnDefs={columnDefs}
+          pagination={true}
+          paginationAutoPageSize={true}
+        />
+      </div>
+      <Snackbar 
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+        message="Customer deleted succesfully"
+      />
+      <Snackbar
+                open={trainingOpen}
+                autoHideDuration={3000}
+                onClose={() => setTrainingOpen(false)}
+                message="Training added succesfully"
             />
-        </div>
-        </>
+    </>
     );
 }
 
