@@ -5,7 +5,6 @@ import "ag-grid-community/styles/ag-theme-material.css";
 import  Snackbar  from '@mui/material/Snackbar';
 import { Button } from "@mui/material";
 import { fetchCustomers} from "./customerapi";
-import { fetchTrainings } from "./trainingapi";
 import AddCustomer from "./AddCustomer";
 import EditCustomer from './EditCustomer';
 import AddTraining from "./AddTraining"
@@ -46,24 +45,24 @@ function Customerlist() {
     }
 
     const [columnDefs] = useState([
-        { field: 'firstname', sortable: true, filter: true, width: 120},
-        { field: 'lastname', sortable: true, filter: true, width: 130},
-        { field: 'email', sortable: true, filter: true, width:180},
-        { field: 'phone', sortable: true, filter: true, width: 150 },
+        { field: 'firstname', sortable: true, filter: true, width: 125},
+        { field: 'lastname', sortable: true, filter: true, width: 125},
+        { field: 'email', sortable: true, filter: true, width:175},
+        { field: 'phone', sortable: true, filter: true, width: 145 },
         { field: 'streetaddress', sortable: true, filter: true, width:160 },
-        { field: 'postcode', sortable: true, filter: true, width:130 },
-        { field: 'city', sortable: true, filter: true, width:110 },
+        { field: 'postcode', sortable: true, filter: true, width:125 },
+        { field: 'city', sortable: true, filter: true, width:105 },
         {
             cellRenderer: params => <EditCustomer customerdata={params.data} fetchCustomers={fetchCustomers} />,
-            width: 120
+            width: 115
           },
           {
-            cellRenderer: params => <Button size="small" onClick={() => deleteCustomer(params.data.links[0].href)}>Delete</Button>,
-            width: 120
+            cellRenderer: params => <Button size="small"  onClick={() => deleteCustomer(params.data.links[0].href)}>Delete</Button>,
+            width: 115
           },
           {
             cellRenderer: params => <AddTraining customerdata={params.data} fetchCustomers={fetchCustomers} setTrainingOpen={setTrainingOpen} />,
-            width: 190
+            width: 185
           },
     ])
 
@@ -73,7 +72,7 @@ function Customerlist() {
     return(
         <>
       <AddCustomer fetchCustomers={fetchCustomers} />
-      <div className='ag-theme-material' style={{ width: '90%', height: 600 }}>
+      <div className='ag-theme-material' style={{ width: '100%', height: 650 }}>
         <AgGridReact 
           rowData={customers}
           columnDefs={columnDefs}

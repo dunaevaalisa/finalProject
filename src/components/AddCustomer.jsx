@@ -43,9 +43,14 @@ export default function AddCustomer({ fetchCustomers }) {
     handleClose();
   }
 
+  const buttonStyle = {
+    marginTop: '20px', 
+    fontWeight: 'bold', 
+  }
+  
   return (
     <>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="outlined" style = {buttonStyle} onClick={handleClickOpen}>
         Add Customer
       </Button>
       <Dialog open={open} onClose={handleClose}>

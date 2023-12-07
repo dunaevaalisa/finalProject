@@ -4,7 +4,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 import { Button } from '@mui/material';
 import { Snackbar } from '@mui/material';
-import AddTraining from './AddTraining';
+
 
 
 import dayjs from 'dayjs';
@@ -48,20 +48,20 @@ const fetchTrainings = () => {
 }
 }
 const [columnDefs] = useState([
-  { field: 'activity', headerName: 'Activity', sortable: true, filter: true, width: 150 },
-  { field: 'date', headerName: 'Date', sortable: true, filter: true, width: 200, cellRenderer: formatDate },
-  { field: 'duration', headerName: 'Duration', sortable: true, filter: true, width: 120 },
+  { field: 'activity', headerName: 'Activity', sortable: true, filter: true, width: 300 },
+  { field: 'date', headerName: 'Date', sortable: true, filter: true, width: 300, cellRenderer: formatDate },
+  { field: 'duration', headerName: 'Duration', sortable: true, filter: true, width: 200 },
   {
     field: 'customerName',
     headerName: 'Customer',
     sortable: true,
     filter: true,
-    width: 200,
+    width: 250,
     valueGetter: params => params.data.customer.firstname + ' ' + params.data.customer.lastname,
   },
   {
     headerName: 'Delete', 
-    width: 120,
+    width: 200,
     cellRenderer: params => (
       <Button size="small" onClick={() => deleteTraining(params.data.id)}>
         Delete
@@ -75,7 +75,7 @@ const [columnDefs] = useState([
   return (
     <>
   
-    <div className="ag-theme-material" style={{ width: '90%', height: 600 }}>
+    <div className="ag-theme-material" style={{ width: '100%', height: 700 }}>
       <AgGridReact
         rowData={trainings}
         columnDefs={columnDefs}
