@@ -1,10 +1,9 @@
-import Customers from "./components/Customers"
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
 import { Link, Outlet } from 'react-router-dom';
-import './App.css';
+
 
 
 
@@ -17,6 +16,8 @@ function App() {
     fontWeight: 'bold', 
   };
 
+
+  
   return (
     <>
     <Container maxWidth = "xl">
@@ -27,6 +28,9 @@ function App() {
           </Typography>
           <Typography variant="h6">
           <Link to="/Trainings" style={linkStyle}>Trainings</Link>
+          </Typography>
+          <Typography variant="h6">
+          <Link to="/Calendar" style={linkStyle}>Calendar</Link>
           </Typography>
         </Toolbar>
       </AppBar>

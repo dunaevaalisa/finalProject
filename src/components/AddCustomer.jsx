@@ -44,7 +44,7 @@ export default function AddCustomer({ fetchCustomers }) {
   }
 
   const buttonStyle = {
-    marginTop: '20px', 
+    marginTop: '0px', 
     fontWeight: 'bold', 
   }
   

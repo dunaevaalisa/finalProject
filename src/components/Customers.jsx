@@ -7,7 +7,9 @@ import { Button } from "@mui/material";
 import { fetchCustomers} from "./customerapi";
 import AddCustomer from "./AddCustomer";
 import EditCustomer from './EditCustomer';
-import AddTraining from "./AddTraining"
+import AddTraining from "./AddTraining";
+import { CSVLink } from 'react-csv';
+
 
 function Customerlist() {
     const [customers, setCustomers] = useState([]);
@@ -65,14 +67,38 @@ function Customerlist() {
             width: 185
           },
     ])
+    
 
-
+    const linkStyle = {
+      textDecoration: 'none',
+      padding: '8px 12px',
+      borderRadius: '4px',
+      color: '#DAA520',
+      border: '1px solid #DAA520',
+      marginLeft: '50px',
+      marginRight: '50px',
+      fontWeight: 'bold', 
+    };
    
+    const headers = [
+      { label: 'Firstname', key: 'firstname' },
+      { label: 'Lastname', key: 'lastname' },
+      { label: 'Email', key: 'email' },
+      { label: 'Phone' , key: 'phone'},
+      { label: 'Streetaddress', key: 'streetaddress'},
+      { label: 'Postcode', key: 'postcode'},
+      { lebal: 'City', key: 'city'}
+    ];
+  
 
     return(
         <>
+         <CSVLink data={customers} headers={headers} filename={'customers.csv'} style={linkStyle}>
+        Export Customers
+      </CSVLink>
       <AddCustomer fetchCustomers={fetchCustomers} />
       <div className='ag-theme-material' style={{ width: '100%', height: 650 }}>
+      
         <AgGridReact 
           rowData={customers}
           columnDefs={columnDefs}

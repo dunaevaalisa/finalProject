@@ -1,4 +1,4 @@
-export const fetchTrainings = (setTrainings) => {
+export const fetchTrainings = () => {
     return fetch(import.meta.env.VITE_API_URL + '/gettrainings')
     .then(response => {
         if(!response.ok) 
@@ -6,7 +6,6 @@ export const fetchTrainings = (setTrainings) => {
 
         return response.json();
      })
-     .then(data => setTrainings(data.content))
      .catch(err => console.error(err))
 }
 
